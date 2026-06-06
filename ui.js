@@ -43,7 +43,7 @@ Analysis.data.forEach(r => {
 
   } else if (r.英文 && r.英文.trim()) {
 
-    name = `...(${r.英文.trim()})`;
+    name = `【待釐正】(${r.英文.trim()})`;
 
   }
 
@@ -113,9 +113,13 @@ renderTopCombos(rows) {
 
   rows.forEach(r => {
 
-    const key =
-      `${r.上蓋} ${r.固鎖}${r.軸}`;
+const bladeName =
+  r.上蓋 && r.上蓋.trim()
+    ? r.上蓋
+    : `【未翻譯】${r.英文 || ''}`;
 
+const key =
+  `${bladeName} ${r.固鎖}${r.軸}`;
     map[key] = (map[key] || 0) + 1;
 
   });
@@ -237,7 +241,11 @@ renderResults(rows) {
           text-overflow:ellipsis;
           font-size:14px;
         ">
-          ${r.上蓋}
+         ${
+  r.上蓋 && r.上蓋.trim()
+    ? r.上蓋
+    : `【未翻譯】${r.英文 || ''}`
+}
         </div>
 
         <div style="
