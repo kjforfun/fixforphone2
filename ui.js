@@ -237,6 +237,7 @@ return `
   <div style="
   text-align:center;
   color:#002244;
+  transform:translateX(-50px);
   font-weight:bold;
 ">
   ${setup}
