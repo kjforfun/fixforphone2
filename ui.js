@@ -225,29 +225,30 @@ return `
   font-size:14px;
 ">
 
- <div style="
-  text-align:left;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-">
-  ${idx + 1}. <span style="color:red;">${blade}</span>
-</div>
+  <div style="
+    text-align:left;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+  ">
+    ${idx + 1}. <span style="color:red;">${blade}</span>
+  </div>
 
   <div style="
-  text-align:center;
-  color:#002244;
-  transform:translateX(-50px);
-  font-weight:bold;
-">
-  ${setup}
-<div style="
-  text-align:right;
-  color:#666;
-  white-space:nowrap;
-">
-  ${data.total}次(🏆${data.win}次)
-</div>
+    text-align:center;
+    color:#002244;
+    font-weight:bold;
+  ">
+    ${setup}
+  </div>
+
+  <div style="
+    text-align:right;
+    color:#666;
+    white-space:nowrap;
+  ">
+    ${data.total}次(🏆${data.win}次)
+  </div>
 
 </div>
 `;
