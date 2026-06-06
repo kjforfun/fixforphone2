@@ -21,116 +21,23 @@ render() {
   this.renderResults(rows);
 },
 
+
+
 renderFilters() {
 
-  const bladeSelect = document.getElementById('bladeSelect');
-  const ratchetSelect = document.getElementById('ratchetSelect');
-  const bitSelect = document.getElementById('bitSelect');
-
-  const currentBlade = bladeSelect.value;
-  const currentRatchet = ratchetSelect.value;
-  const currentBit = bitSelect.value;
-
-const bladeFilteredRows =
-  Analysis.filter({
-    keyword: '',
-    blade: currentBlade || '',
-    ratchet: '',
-    bit: ''
-  });
-
-// A+B 決定 C(軸)
-
-const bladeRatchetFilteredRows =
-  Analysis.filter({
-    keyword: '',
-    blade: currentBlade || '',
-    ratchet: currentRatchet || '',
-    bit: ''
-  });
-
-  
-
-const bladeMap = {};
-
-Analysis.data.forEach(r => {
-
-  let name = '';
-
-  if (r.上蓋 && r.上蓋.trim()) {
-
-    name = r.上蓋.trim();
-
-  } else if (r.英文 && r.英文.trim()) {
-
-    name = `【待釐正】(${r.英文.trim()})`;
-
-  }
-
-  if (!name) return;
-
-  bladeMap[name] =
-    (bladeMap[name] || 0) + 1;
-
-});
-
-const blades =
-  Object.entries(bladeMap)
-    .sort((a,b)=>b[1]-a[1])
-    .map(([name,count])=>({
-      name,
-      count
-    }));
-
-bladeSelect.innerHTML =
-  '<option value="">全部上蓋</option>' +
-  blades.map(x =>
-    `<option value="${x.name}">${x.name} (${x.count})</option>`
-  ).join('');
-
-
-  const ratchets =
-  [...new Set(
-    bladeFilteredRows
-      .map(r => r.固鎖)
-      .filter(Boolean)
-  )]
-    .sort((a, b) => {
-
-      const [a1, a2] = String(a).split('-').map(Number);
-      const [b1, b2] = String(b).split('-').map(Number);
-
-      if (a1 !== b1) return a1 - b1;
-
-      return a2 - b2;
-
-    });
-
-  ratchetSelect.innerHTML =
-    '<option value="">全部固鎖</option>' +
-    ratchets.map(x =>
-      `<option value="${x}">${x}</option>`
-    ).join('');
-
- const bits =
-  [...new Set(
-    bladeRatchetFilteredRows
-      .map(r => r.軸)
-      .filter(Boolean)
-  )]
-  .sort();
-
-  bitSelect.innerHTML =
-    '<option value="">全部軸心</option>' +
-    bits.map(x =>
-      `<option value="${x}">${x}</option>`
-    ).join('');
+  一大堆程式...
 
   bladeSelect.value = currentBlade;
   ratchetSelect.value = currentRatchet;
   bitSelect.value = currentBit;
+
 },
 
+
+
+
+
+  
 renderTopCombos(rows) {
 
   const map = {};
