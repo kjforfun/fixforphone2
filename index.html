@@ -1,36 +1,94 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>陀螺 COMBOS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
 <header class="top-header">
   <h1>陀螺 COMBOS</h1>
 </header>
-<main>
-<section class="card" id="searchPanel">
-<div class="search-row">
-  <input id="keyword" placeholder="搜尋 中文 / English / 固鎖 / 軸心">
 
-  
-  <button id="clearSearchButton">✕</button>
-  
-</div>
-<div class="filters">
-<select id="bladeSelect"></select>
-<select id="ratchetSelect"></select>
-<select id="bitSelect"></select>
-</div>
-<div class="bottom-actions">
-  <button id="clearAllButton">清除全部</button>
-  <span id="recordCount">0 筆</span>
-</div>
+<main>
+
+<section class="card" id="searchPanel">
+
+  <input
+    id="keyword"
+    placeholder="搜尋 中文 / English / 固鎖 / 軸心"
+  >
+
+  <div class="filters">
+
+    <div class="filter-row">
+      <select id="bladeSelect"></select>
+      <button type="button" id="clearBlade">✕</button>
+    </div>
+
+    <div class="filter-row">
+      <select id="ratchetSelect"></select>
+      <button type="button" id="clearRatchet">✕</button>
+    </div>
+
+    <div class="filter-row">
+      <select id="bitSelect"></select>
+      <button type="button" id="clearBit">✕</button>
+    </div>
+
+  </div>
+
+  <div class="bottom-actions">
+    <button type="button" id="clearAllButton">
+      清除全部
+    </button>
+
+    <span id="recordCount">
+      0 筆
+    </span>
+  </div>
+
 </section>
-<section class="card"><h2>熱門組合</h2><div id="topCombos"></div></section>
-<section class="card"><div class="ranking-grid">
-<div><h3>熱門上蓋</h3><div id="bladeRanking"></div></div>
-<div><h3>熱門固鎖</h3><div id="ratchetRanking"></div></div>
-<div><h3>熱門軸心</h3><div id="bitRanking"></div></div>
-</div></section>
-<section class="card"><h2>賽果</h2><div id="resultList"></div></section>
+
+<section class="card">
+  <h2>熱門組合</h2>
+  <div id="topCombos"></div>
+</section>
+
+<section class="card">
+  <div class="ranking-grid">
+
+    <div>
+      <h3>熱門上蓋</h3>
+      <div id="bladeRanking"></div>
+    </div>
+
+    <div>
+      <h3>熱門固鎖</h3>
+      <div id="ratchetRanking"></div>
+    </div>
+
+    <div>
+      <h3>熱門軸心</h3>
+      <div id="bitRanking"></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="card">
+  <h2>賽果</h2>
+  <div id="resultList"></div>
+</section>
+
 </main>
+
 <script src="analysis.js"></script>
 <script src="ui.js"></script>
 <script src="app.js"></script>
-</body></html>
+
+</body>
+</html>
