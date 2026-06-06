@@ -8,8 +8,11 @@ const text=[r.英文,r.上蓋,r.固鎖,r.軸].join(' ').toLowerCase();
 return (!keyword||text.includes(keyword))
 &&(
   !blade ||
-  r.上蓋 === blade ||
-  `【未翻譯】${r.英文}` === blade
+  (
+    r.上蓋 && r.上蓋.trim()
+      ? r.上蓋 === blade
+      : `【待釐正】(${r.英文})` === blade
+  )
 )
 &&(!ratchet||r.固鎖===ratchet)
 &&(!bit||r.軸===bit);
