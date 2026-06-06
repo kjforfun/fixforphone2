@@ -212,7 +212,7 @@ rows.forEach(r => {
     Object.entries(map)
       .sort((a, b) => b[1].total - a[1].total)
       .slice(0, 3)
-      .map(([combo, count], idx) => {
+      .map(([combo, data], idx) => {
 
         const parts = combo.split(' ');
         const blade = parts[0];
@@ -248,7 +248,7 @@ return `
     text-align:right;
     color:#666;
   ">
-    ${count}次
+    ${data.total}次
   </div>
 
 </div>
