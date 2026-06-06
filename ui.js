@@ -87,6 +87,8 @@ renderFilters() {
 },
 
 renderSummary(rows){
+  return;
+}
 
   const total = rows.length || 1;
 
