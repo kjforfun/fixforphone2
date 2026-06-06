@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -19,36 +20,47 @@
 
   <input
     id="keyword"
+    type="text"
     placeholder="搜尋 中文 / English / 固鎖 / 軸心"
   >
 
   <div class="filters">
 
+    <!-- 上蓋 -->
     <div class="filter-row">
       <select id="bladeSelect"></select>
       <button type="button" id="clearBlade">✕</button>
     </div>
 
-    <div class="filter-row">
-      <select id="ratchetSelect"></select>
-      <button type="button" id="clearRatchet">✕</button>
-    </div>
+    <!-- 固鎖 + 軸心 -->
+    <div class="filter-double">
 
-    <div class="filter-row">
-      <select id="bitSelect"></select>
-      <button type="button" id="clearBit">✕</button>
+      <div class="filter-row">
+        <select id="ratchetSelect"></select>
+        <button type="button" id="clearRatchet">✕</button>
+      </div>
+
+      <div class="filter-row">
+        <select id="bitSelect"></select>
+        <button type="button" id="clearBit">✕</button>
+      </div>
+
     </div>
 
   </div>
 
   <div class="bottom-actions">
-    <button type="button" id="clearAllButton">
+
+    <button
+      type="button"
+      id="clearAllButton">
       清除全部
     </button>
 
     <span id="recordCount">
       0 筆
     </span>
+
   </div>
 
 </section>
@@ -59,7 +71,8 @@
 </section>
 
 <section class="card">
-  <div class="ranking-grid">
+
+  <div class="ranking-grid custom-ranking">
 
     <div>
       <h3>熱門上蓋</h3>
@@ -77,11 +90,15 @@
     </div>
 
   </div>
+
 </section>
 
 <section class="card">
+
   <h2>賽果</h2>
+
   <div id="resultList"></div>
+
 </section>
 
 </main>
@@ -91,4 +108,5 @@
 <script src="app.js"></script>
 
 </body>
+
 </html>
