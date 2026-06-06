@@ -214,9 +214,7 @@ rows.forEach(r => {
       .slice(0, 3)
       .map(([combo, data], idx) => {
 
-        const [blade, setup] = combo.split('|');
-        const blade = parts[0];
-        const setup = parts.slice(1).join(' ');
+       const [blade, setup] = combo.split('|');
 
 return `
 <div style="
