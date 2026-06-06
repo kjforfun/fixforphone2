@@ -179,18 +179,34 @@ renderTopCombos(rows) {
 
   const map = {};
 
-  rows.forEach(r => {
+rows.forEach(r => {
 
-const bladeName =
-  r.上蓋 && r.上蓋.trim()
-    ? r.上蓋
-    : `【未翻譯】${r.英文 || ''}`;
+  const bladeName =
+    r.上蓋 && r.上蓋.trim()
+      ? r.上蓋
+      : `【未翻譯】${r.英文 || ''}`;
 
-const key =
-  `${bladeName} ${r.固鎖}${r.軸}`;
-    map[key] = (map[key] || 0) + 1;
+  const key =
+    `${bladeName}|${r.固鎖}${r.軸}`;
 
-  });
+  if (!map[key]) {
+    map[key] = {
+      total: 0,
+      win: 0
+    };
+  }
+
+  map[key].total++;
+
+  if (
+    String(r.名次 || '')
+      .toUpperCase()
+      .includes('1ST')
+  ) {
+    map[key].win++;
+  }
+
+});
 
   const html =
     Object.entries(map)
