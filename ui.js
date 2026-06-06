@@ -227,28 +227,29 @@ return `
   font-size:14px;
 ">
 
-  <div style="
-    text-align:left;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-  ">
-    ${idx + 1}. ${blade}
-  </div>
+ <div style="
+  text-align:left;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+">
+  ${idx + 1}. <span style="color:red;">${blade}</span>
+</div>
 
   <div style="
-    text-align:center;
-    color:#0b3d91;
-    font-weight:bold;
-  ">
-    ${setup}
-  </div>
+  text-align:center;
+  color:#002244;
+  font-weight:bold;
+">
+  ${setup}
+</div>
+
 
   <div style="
     text-align:right;
     color:#666;
   ">
-    得名${data.total}次(第一名${data.win}次)
+    ${data.total}次(🏆${data.win}次)
   </div>
 
 </div>
