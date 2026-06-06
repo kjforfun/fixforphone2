@@ -106,12 +106,15 @@ renderTopCombos(rows){
       .sort((a,b)=>b[1]-a[1])
       .slice(0,3)
       .map(([combo,count],idx)=>
-        `<div style="padding:4px 0">
-          ${idx+1}. ${combo}
-          <span style="float:right">
-            ${count} 次得獎
-          </span>
-        </div>`
+        `
+        <div style="
+          padding:2px 0;
+          text-align:center;
+          font-size:14px;
+        ">
+          ${idx+1}. ${combo} (${count}次)
+        </div>
+        `
       )
       .join('');
 
@@ -138,7 +141,8 @@ renderRankings(rows){
 
             <div style="
               display:flex;
-              justify-content:space-between;
+              justify-content:center;
+              gap:8px;
               margin-bottom:2px;
             ">
               <span>${name}</span>
@@ -179,9 +183,9 @@ renderResults(rows){
 
       <div style="
         display:grid;
-        grid-template-columns:1fr 90px 70px;
+        grid-template-columns:2fr 90px 40px;
         align-items:center;
-        padding:8px 0;
+        padding:6px 0;
         border-bottom:1px solid #eee;
       ">
 
@@ -189,9 +193,9 @@ renderResults(rows){
           overflow:hidden;
           white-space:nowrap;
           text-overflow:ellipsis;
+          font-size:14px;
         ">
           ${r.上蓋}
-          ${r.英文 ? `(${r.英文})` : ''}
         </div>
 
         <div style="
@@ -205,12 +209,12 @@ renderResults(rows){
         </div>
 
         <div style="
-          text-align:right;
+          text-align:center;
         ">
           ${
             String(r.名次 || '')
               .toUpperCase()
-              .includes('1')
+              .includes('1ST')
               ? '🏆'
               : (r.名次 || '')
           }
