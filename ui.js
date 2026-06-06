@@ -219,7 +219,7 @@ rows.forEach(r => {
 return `
 <div style="
   display:grid;
-  grid-template-columns: 1.8fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1.5fr;
   align-items:center;
   padding:4px 0;
   font-size:14px;
@@ -243,12 +243,7 @@ return `
 </div>
 
 
-  <div style="
-    text-align:right;
-    color:#666;
-  ">
-    ${data.total}次(🏆${data.win}次)
-  </div>
+</div>
 
 </div>
 `;
