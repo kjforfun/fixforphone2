@@ -21,18 +21,155 @@ render() {
   this.renderResults(rows);
 },
 
-
-
 renderFilters() {
 
-  一大堆程式...
+  const bladeSelect = document.getElementById('bladeSelect');
+  const ratchetSelect = document.getElementById('ratchetSelect');
+  const bitSelect = document.getElementById('bitSelect');
 
-  bladeSelect.value = currentBlade;
-  ratchetSelect.value = currentRatchet;
-  bitSelect.value = currentBit;
+  const currentBlade = bladeSelect.value;
+  const currentRatchet = ratchetSelect.value;
+  const currentBit = bitSelect.value;
+
+  // 全向連動(Faceted Filter)
+
+  const rowsForBlade =
+    Analysis.filter({
+      keyword: '',
+      blade: '',
+      ratchet: currentRatchet || '',
+      bit: currentBit || ''
+    });
+
+  const rowsForRatchet =
+    Analysis.filter({
+      keyword: '',
+      blade: currentBlade || '',
+      ratchet: '',
+      bit: currentBit || ''
+    });
+
+  const rowsForBit =
+    Analysis.filter({
+      keyword: '',
+      blade: currentBlade || '',
+      ratchet: currentRatchet || '',
+      bit: ''
+    });
+
+  // ===== 上蓋 =====
+
+  const bladeMap = {};
+
+  rowsForBlade.forEach(r => {
+
+    let name = '';
+
+    if (r.上蓋 && r.上蓋.trim()) {
+
+      name = r.上蓋.trim();
+
+    } else if (r.英文 && r.英文.trim()) {
+
+      name = `【待釐正】(${r.英文.trim()})`;
+
+    }
+
+    if (!name) return;
+
+    bladeMap[name] =
+      (bladeMap[name] || 0) + 1;
+
+  });
+
+  const blades =
+    Object.entries(bladeMap)
+      .sort((a,b)=>b[1]-a[1])
+      .map(([name,count])=>({
+        name,
+        count
+      }));
+
+  bladeSelect.innerHTML =
+    '<option value="">全部上蓋</option>' +
+    blades.map(x =>
+      `<option value="${x.name}">${x.name} (${x.count})</option>`
+    ).join('');
+
+  // ===== 固鎖 =====
+
+  const ratchets =
+    [...new Set(
+      rowsForRatchet
+        .map(r => r.固鎖)
+        .filter(Boolean)
+    )]
+    .sort((a,b)=>{
+
+      const [a1,a2] =
+        String(a).split('-').map(Number);
+
+      const [b1,b2] =
+        String(b).split('-').map(Number);
+
+      if(a1!==b1) return a1-b1;
+
+      return a2-b2;
+
+    });
+
+  ratchetSelect.innerHTML =
+    '<option value="">全部固鎖</option>' +
+    ratchets.map(x =>
+      `<option value="${x}">${x}</option>`
+    ).join('');
+
+  // ===== 軸 =====
+
+  const bits =
+    [...new Set(
+      rowsForBit
+        .map(r => r.軸)
+        .filter(Boolean)
+    )]
+    .sort();
+
+  bitSelect.innerHTML =
+    '<option value="">全部軸心</option>' +
+    bits.map(x =>
+      `<option value="${x}">${x}</option>`
+    ).join('');
+
+  // ===== 恢復選擇 =====
+
+  if (
+    [...bladeSelect.options]
+      .some(o => o.value === currentBlade)
+  ) {
+    bladeSelect.value = currentBlade;
+  } else {
+    bladeSelect.value = '';
+  }
+
+  if (
+    [...ratchetSelect.options]
+      .some(o => o.value === currentRatchet)
+  ) {
+    ratchetSelect.value = currentRatchet;
+  } else {
+    ratchetSelect.value = '';
+  }
+
+  if (
+    [...bitSelect.options]
+      .some(o => o.value === currentBit)
+  ) {
+    bitSelect.value = currentBit;
+  } else {
+    bitSelect.value = '';
+  }
 
 },
-
 
 
 
