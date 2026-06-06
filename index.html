@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>陀螺 COMBOS</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top-header">
+<div class="title-area"><h1>陀螺 COMBOS</h1><span class="version">V3</span></div>
+<div id="recordCount">0 筆</div>
+</header>
+<main>
+<section class="card" id="searchPanel">
+<input id="keyword" placeholder="搜尋 中文 / English / 固鎖 / 軸心">
+<div class="filters">
+<select id="bladeSelect"></select>
+<select id="ratchetSelect"></select>
+<select id="bitSelect"></select>
+</div>
+<button id="clearAllButton">清除全部</button>
+</section>
+<section class="card"><h2>目前分析</h2><div id="summaryContent"></div></section>
+<section class="card"><h2>熱門組合</h2><div id="topCombos"></div></section>
+<section class="card"><div class="ranking-grid">
+<div><h3>熱門上蓋</h3><div id="bladeRanking"></div></div>
+<div><h3>熱門固鎖</h3><div id="ratchetRanking"></div></div>
+<div><h3>熱門軸心</h3><div id="bitRanking"></div></div>
+</div></section>
+<section class="card"><h2>賽果</h2><div id="resultList"></div></section>
+</main>
+<script src="analysis.js"></script>
+<script src="ui.js"></script>
+<script src="app.js"></script>
+</body></html>
