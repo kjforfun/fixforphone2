@@ -248,7 +248,7 @@ return `
     text-align:right;
     color:#666;
   ">
-    ${data.total}次
+    得名${data.total}次(第一名${data.win}次)
   </div>
 
 </div>
