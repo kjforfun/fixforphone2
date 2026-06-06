@@ -148,7 +148,7 @@ renderTopCombos(rows){
   const html =
     Object.entries(map)
     .sort((a,b)=>b[1]-a[1])
-    .slice(0,10)
+    .slice(0,3)
     .map(([combo,count],idx)=>
       `<div style="padding:4px 0">
         ${idx+1}. ${combo}
