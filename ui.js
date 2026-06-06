@@ -2,6 +2,8 @@ const UI = {
 
 render() {
 
+  if (!Analysis.data.length) return;
+
   this.renderFilters();
 
   const rows = Analysis.filter({
@@ -25,82 +27,66 @@ renderFilters() {
   const ratchetSelect = document.getElementById('ratchetSelect');
   const bitSelect = document.getElementById('bitSelect');
 
- if (
-  !bladeSelect.dataset.loaded ||
-  bladeSelect.options.length <= 1
-) {
+  const currentBlade = bladeSelect.value;
+  const currentRatchet = ratchetSelect.value;
+  const currentBit = bitSelect.value;
 
-    const blades =
-      Analysis.countBy(Analysis.data,'上蓋')
-      .map(([name,count]) => ({
+  const blades =
+    Analysis.countBy(Analysis.data, '上蓋')
+      .map(([name, count]) => ({
         name,
         count
       }));
 
-    bladeSelect.innerHTML =
-      '<option value="">全部上蓋</option>' +
-      blades.map(x =>
-        `<option value="${x.name}">${x.name} (${x.count})</option>`
-      ).join('');
+  bladeSelect.innerHTML =
+    '<option value="">全部上蓋</option>' +
+    blades.map(x =>
+      `<option value="${x.name}">${x.name} (${x.count})</option>`
+    ).join('');
 
-    bladeSelect.dataset.loaded = '1';
-  }
+  const ratchets =
+    [...new Set(
+      Analysis.data
+        .map(r => r.固鎖)
+        .filter(Boolean)
+    )]
+    .sort((a, b) => {
 
- if (
-  !ratchetSelect.dataset.loaded ||
-  ratchetSelect.options.length <= 1
-) {
-    const ratchets =
-      [...new Set(
-        Analysis.data
-          .map(r=>r.固鎖)
-          .filter(Boolean)
-      )]
-      .sort((a,b)=>{
+      const [a1, a2] = String(a).split('-').map(Number);
+      const [b1, b2] = String(b).split('-').map(Number);
 
-        const [a1,a2] = a.split('-').map(Number);
-        const [b1,b2] = b.split('-').map(Number);
+      if (a1 !== b1) return a1 - b1;
 
-        if(a1!==b1) return a1-b1;
+      return a2 - b2;
 
-        return a2-b2;
+    });
 
-      });
+  ratchetSelect.innerHTML =
+    '<option value="">全部固鎖</option>' +
+    ratchets.map(x =>
+      `<option value="${x}">${x}</option>`
+    ).join('');
 
-    ratchetSelect.innerHTML =
-      '<option value="">全部固鎖</option>' +
-      ratchets.map(x =>
-        `<option value="${x}">${x}</option>`
-      ).join('');
+  const bits =
+    Analysis.countBy(Analysis.data, '軸')
+      .map(([name]) => name);
 
-    ratchetSelect.dataset.loaded='1';
-  }
+  bitSelect.innerHTML =
+    '<option value="">全部軸心</option>' +
+    bits.map(x =>
+      `<option value="${x}">${x}</option>`
+    ).join('');
 
-if (
-  !bitSelect.dataset.loaded ||
-  bitSelect.options.length <= 1
-) {
-
-    const bits =
-      Analysis.countBy(Analysis.data,'軸')
-      .map(([name])=>name);
-
-    bitSelect.innerHTML =
-      '<option value="">全部軸心</option>' +
-      bits.map(x =>
-        `<option value="${x}">${x}</option>`
-      ).join('');
-
-    bitSelect.dataset.loaded='1';
-  }
-
+  bladeSelect.value = currentBlade;
+  ratchetSelect.value = currentRatchet;
+  bitSelect.value = currentBit;
 },
 
-renderTopCombos(rows){
+renderTopCombos(rows) {
 
   const map = {};
 
-  rows.forEach(r=>{
+  rows.forEach(r => {
 
     const key =
       `${r.上蓋} ${r.固鎖}${r.軸}`;
@@ -111,107 +97,106 @@ renderTopCombos(rows){
 
   const html =
     Object.entries(map)
-      .sort((a,b)=>b[1]-a[1])
-      .slice(0,3)
-      .map(([combo,count],idx)=>{
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([combo, count], idx) => {
 
-  const parts = combo.split(' ');
-  const blade = parts[0];
-  const setup = parts.slice(1).join(' ');
+        const parts = combo.split(' ');
+        const blade = parts[0];
+        const setup = parts.slice(1).join(' ');
 
-  return `
-    <div style="
-      padding:2px 0;
-      font-size:14px;
-      text-align:right;
-    ">
-      ${idx+1}.
-      <span style="
-        color:#d32f2f;
-        font-weight:bold;
-      ">
-        ${blade}
-      </span>
-      ${setup}
-      (${count}次)
-    </div>
-  `;
-})
+        return `
+          <div style="
+            padding:2px 0;
+            font-size:14px;
+            text-align:right;
+          ">
+            ${idx + 1}.
+            <span style="
+              color:#d32f2f;
+              font-weight:bold;
+            ">
+              ${blade}
+            </span>
+            ${setup}
+            (${count}次)
+          </div>
+        `;
+      })
       .join('');
 
   document.getElementById('topCombos').innerHTML =
     html || '無資料';
 },
 
-renderRankings(rows){
+renderRankings(rows) {
 
-  const renderRanking = (target,key)=>{
+  const renderRanking = (target, key) => {
 
     const total = rows.length || 1;
 
     const html =
-      Analysis.countBy(rows,key)
-      .slice(0,3)
-      .map(([name,count])=>{
+      Analysis.countBy(rows, key)
+        .slice(0, 3)
+        .map(([name, count]) => {
 
-        const pct =
-          (count/total*100).toFixed(1);
+          const pct =
+            (count / total * 100).toFixed(1);
 
-        return `
-          <div style="margin-bottom:8px">
+          return `
+            <div style="margin-bottom:8px">
 
-            <div style="
-              display:flex;
-              justify-content:center;
-              gap:8px;
-              margin-bottom:2px;
-            ">
-              <span style="
-  color:#0b3d91;
-  font-weight:bold;
-">
-  ${name}
-</span>
-
-<span style="
-  color:#000;
-  font-size:12px;
-">
-  ${pct}%
-</span>
-            </div>
-
-            <div style="
-              background:#ddd;
-              height:10px;
-              border-radius:5px;
-            ">
               <div style="
-                width:${pct}%;
-                background:#2e7d32;
+                display:flex;
+                justify-content:center;
+                gap:8px;
+                margin-bottom:2px;
+              ">
+                <span style="
+                  color:#0b3d91;
+                  font-weight:bold;
+                ">
+                  ${name}
+                </span>
+
+                <span style="
+                  color:#000;
+                  font-size:12px;
+                ">
+                  ${pct}%
+                </span>
+              </div>
+
+              <div style="
+                background:#ddd;
                 height:10px;
                 border-radius:5px;
-              "></div>
-            </div>
+              ">
+                <div style="
+                  width:${pct}%;
+                  background:#2e7d32;
+                  height:10px;
+                  border-radius:5px;
+                "></div>
+              </div>
 
-          </div>
-        `;
-      })
-      .join('');
+            </div>
+          `;
+        })
+        .join('');
 
     document.getElementById(target).innerHTML = html;
   };
 
-  renderRanking('bladeRanking','上蓋');
-  renderRanking('ratchetRanking','固鎖');
-  renderRanking('bitRanking','軸');
-
+  renderRanking('bladeRanking', '上蓋');
+  renderRanking('ratchetRanking', '固鎖');
+  renderRanking('bitRanking', '軸');
 },
 
-renderResults(rows){
+renderResults(rows) {
 
   document.getElementById('resultList').innerHTML =
-    rows.map(r=>`
+    rows.map(r => `
 
       <div style="
         display:grid;
@@ -260,56 +245,58 @@ renderResults(rows){
 
 };
 
-window.addEventListener('DOMContentLoaded',()=>{
+window.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('keyword')
-    .addEventListener('input',()=>UI.render());
+    .addEventListener('input', () => UI.render());
 
   document.getElementById('bladeSelect')
-    .addEventListener('change',()=>UI.render());
+    .addEventListener('change', () => UI.render());
 
   document.getElementById('ratchetSelect')
-    .addEventListener('change',()=>UI.render());
+    .addEventListener('change', () => UI.render());
 
   document.getElementById('bitSelect')
-    .addEventListener('change',()=>UI.render());
+    .addEventListener('change', () => UI.render());
 
   document.getElementById('clearBlade')
-    .addEventListener('click',()=>{
+    .addEventListener('click', () => {
 
-      document.getElementById('bladeSelect').value='';
+      document.getElementById('bladeSelect').value = '';
       UI.render();
 
     });
 
   document.getElementById('clearRatchet')
-    .addEventListener('click',()=>{
+    .addEventListener('click', () => {
 
-      document.getElementById('ratchetSelect').value='';
+      document.getElementById('ratchetSelect').value = '';
       UI.render();
 
     });
 
   document.getElementById('clearBit')
-    .addEventListener('click',()=>{
+    .addEventListener('click', () => {
 
-      document.getElementById('bitSelect').value='';
+      document.getElementById('bitSelect').value = '';
       UI.render();
 
     });
 
   document.getElementById('clearAllButton')
-    .addEventListener('click',()=>{
+    .addEventListener('click', () => {
 
-      document.getElementById('keyword').value='';
-      document.getElementById('bladeSelect').value='';
-      document.getElementById('ratchetSelect').value='';
-      document.getElementById('bitSelect').value='';
+      document.getElementById('keyword').value = '';
+      document.getElementById('bladeSelect').value = '';
+      document.getElementById('ratchetSelect').value = '';
+      document.getElementById('bitSelect').value = '';
 
       UI.render();
 
     });
 
-  UI.render();
+});
 
+document.addEventListener('dataLoaded', () => {
+  UI.render();
 });
