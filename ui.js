@@ -31,13 +31,21 @@ renderFilters() {
   const currentRatchet = ratchetSelect.value;
   const currentBit = bitSelect.value;
 
-  const bladeMap = {};
+const bladeMap = {};
 
 Analysis.data.forEach(r => {
 
-  const name =
-    (r.上蓋 || '').trim() ||
-    (r.英文 || '').trim();
+  let name = '';
+
+  if (r.上蓋 && r.上蓋.trim()) {
+
+    name = r.上蓋.trim();
+
+  } else if (r.英文 && r.英文.trim()) {
+
+    name = `...(${r.英文.trim()})`;
+
+  }
 
   if (!name) return;
 
