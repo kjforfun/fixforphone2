@@ -321,7 +321,7 @@ renderRankings(rows) {
   };
 
   renderRanking('bladeRanking', '上蓋');
-  renderRanking('ratchetRanking', '固鎖');
+  renderRanking('ratchetRanking', '固鎖', true);
   renderRanking('bitRanking', '軸');
 },
 
