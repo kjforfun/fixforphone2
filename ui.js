@@ -434,29 +434,6 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
-/* 名次篩選 */
-.place-filter {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.place-btn {
-  padding: 9px 4px;
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  background: #f6f8fa;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.place-btn.active {
-  background: #1f2937;
-  color: white;
-  border-color: #1f2937;
-}
-
 /* 熱門組合 */
 .top-combo-row {
   display: grid;
